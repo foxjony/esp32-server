@@ -2,12 +2,12 @@
 // IDE PlatformIO (13.04.2024)
 
 /* Build
-RAM:   [=         ]  13.8% (used 45244 bytes from 327680 bytes)
-Flash: [======    ]  61.6% (used 807041 bytes from 1310720 bytes)
+RAM:   [=         ]  13.8% (used 45076 bytes from 327680 bytes)
+Flash: [======    ]  61.1% (used 801377 bytes from 1310720 bytes)
 */
 
 #include <WiFi.h>
-#include <esp_wifi.h>           // FOR esp_wifi_set_mac
+#include <esp_wifi.h>           // For esp_wifi_set_mac
 #include <esp_timer.h>
 #include <ESPAsyncWebServer.h>
 #include <webPage.h>
@@ -24,18 +24,18 @@ typedef signed short    i16;
 typedef unsigned long   u32;
 typedef signed long     i32;
 
-void webserver_Init_STA_Mode();
-void webserver_Init_AP_Mode();
+void wifi_Init_STA_Mode();
+void wifi_Init_AP_Mode();
 
-AsyncWebServer server(80);      // Set AsyncWebServer Port 80
+AsyncWebServer server(80);                  // Set AsyncWebServer Port 80
 
-IPAddress   sta_IP(192, 168, 0, 220);		// WEB Server IP: 192.168.0.220
+IPAddress   sta_IP(192, 168, 0, 220);       // WEB Server IP: 192.168.0.220
 IPAddress   sta_GW(192, 168, 0, 1);
 IPAddress   sta_Mask(255, 255, 255, 0);
-IPAddress   ap_IP(192, 168, 0, 220);		// WEB Server IP: 192.168.0.220
+IPAddress   ap_IP(192, 168, 0, 220);        // WEB Server IP: 192.168.0.220
 IPAddress   ap_Mask(255, 255, 255, 0);
-String      ssid_sta      = "ssid";
-String      pass_sta      = "pass";
+String      ssid_sta      = "WIFI_SSID";
+String      pass_sta      = "WIFI_PASS";
 const char* ssid_ap       = "ESP32";
 const char* pass_ap       = "12345678";
 boolean     ap_Mode       = false;
@@ -94,7 +94,7 @@ void rnd() {
   //if (rnd == 0) {Serial.println("Stop 0"); delay(10000);}       // Yes
   //if (rnd == 255) {Serial.println("Stop 255"); delay(10000);}   // Yes
   
-  //adc = analogRead(GP34);
+  //adc = analogRead(GP34);       // For ADC TRNG
   
   //u8 rng1 = TRNG_Byte();
   //u8 rng2 = TRNG_Byte();
@@ -182,7 +182,7 @@ void page_AP(AsyncWebServerRequest *request) {
   flashLed(2);
   webserver_On = false;
   timerWrite(timer, 0);
-  webserver_Init_AP_Mode();
+  wifi_Init_AP_Mode();
 }
 
 void page_Rng(AsyncWebServerRequest *request) {
@@ -214,7 +214,7 @@ void start_Webserver() {
   flashLed(2);
 }
 
-void webserver_Init_STA_Mode() {
+void wifi_Init_STA_Mode() {
   ap_Mode = false;
   WiFi.disconnect();
   delay(100);
@@ -228,7 +228,7 @@ void webserver_Init_STA_Mode() {
   Serial.print("MAC: ");        Serial.println(WiFi.macAddress());
 }
 
-void webserver_Init_AP_Mode() {
+void wifi_Init_AP_Mode() {
   ap_Mode = true;
   WiFi.disconnect();
   delay(100);
@@ -253,7 +253,7 @@ void ap_Test_Buton() {
   ledOn();
   Serial.println("AP Mode");
   while (!digitalRead(GP17)) {delay(50);}
-  webserver_Init_AP_Mode();
+  wifi_Init_AP_Mode();
 }
 
 void sta_Test_Connect() {
@@ -272,7 +272,7 @@ void setup() {
   esp_deep_sleep_disable_rom_logging();   // Disable Bootloader logging
   //setCpuFrequencyMhz(80);               // {240, 160, 80}
 
-  pinMode(GP34, ANALOG);                  // ADC
+  //pinMode(GP34, ANALOG);                // For ADC TRNG
   pinMode(GP17, INPUT_PULLUP);            // Button (Set AP Mode)
   pinMode(GP04, OUTPUT);                  // User Led (Blue)
   digitalWrite(GP04, LOW);                // User Led (Blue) Off
@@ -285,15 +285,15 @@ void setup() {
   while (!Serial);
   digitalWrite(GP16, HIGH);               // HIGH - Out TX Enable
   delay(10);
-  if (!digitalRead(GP17)) {webserver_Init_AP_Mode();}
-  else                    {webserver_Init_STA_Mode();}
+  if (!digitalRead(GP17)) {wifi_Init_AP_Mode();}
+  else                    {wifi_Init_STA_Mode();}
 
   timer = timerBegin(0, 80, true);              // Timer 0, div 80
   timerAttachInterrupt(timer, &restart, true);  // Attach Callback
   timerAlarmWrite(timer, 3000000, false);       // Set Watchdog Timeout 3s (3000000us)
   timerAlarmEnable(timer);                      // Enable Interrupt
 
-  TRNG_Init(GP34);
+  //TRNG_Init(GP34);                      // For ADC TRNG
 }
 
 void loop() {
