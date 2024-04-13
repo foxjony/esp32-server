@@ -8,16 +8,16 @@
 - Serial out format: SPP - Serial Port Plotter
 
 ## Index Page
-![Index Page](https://github.com/foxjony/esp32-server/img/1.jpg)
+![Index Page](https://github.com/foxjony/esp32-server/blob/main/IMG/1.jpg)
 
 ## Serial out format: SPP - Serial Port Plotter
-![SPP](https://github.com/foxjony/esp32-server/img/2.jpg)
+![SPP](https://github.com/foxjony/esp32-server/blob/main/IMG/2.jpg)
 
 ## 2D Ploter Page
-![2D Ploter Page](https://github.com/foxjony/esp32-server/img/3.jpg)
+![2D Ploter Page](https://github.com/foxjony/esp32-server/blob/main/IMG/3.jpg)
 
 ## 3D Cosmos Page
-![3D Cosmos Page](https://github.com/foxjony/esp32-server/img/4.jpg)
+![3D Cosmos Page](https://github.com/foxjony/esp32-server/blob/main/IMG/4.jpg)
 
 ## Chess Page
-![Chess Page](https://github.com/foxjony/esp32-server/img/5.jpg)
+![Chess Page](https://github.com/foxjony/esp32-server/blob/main/IMG/5.jpg)
