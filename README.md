@@ -21,6 +21,3 @@
 
 ## Chess Page
 ![Chess Page](https://github.com/foxjony/esp32-server/blob/main/IMG/5.jpg)
-
-## ESP32 Schematic
-![Schematic](https://github.com/foxjony/esp32-server/blob/main/IMG/esp32-schematic.png)
