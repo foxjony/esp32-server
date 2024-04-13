@@ -15,7 +15,7 @@ Flash: [======    ]  61.6% (used 807041 bytes from 1310720 bytes)
 #define GP04    4               // User Led (Blue)
 #define GP16    16              // LOW - Out TX Enable/Disable
 #define GP17    17              // Button (Set AP Mode)
-#define GP34    34              // ADC (add to pin wire 0.1 m)
+#define GP34    34              // ADC (add to pin GPIO34 wire 0.1 m)
 
 typedef unsigned char   u8;
 typedef signed char     i8;
@@ -29,10 +29,10 @@ void webserver_Init_AP_Mode();
 
 AsyncWebServer server(80);      // Set AsyncWebServer Port 80
 
-IPAddress   sta_IP(192, 168, 0, 220);
+IPAddress   sta_IP(192, 168, 0, 220);		// WEB Server IP: 192.168.0.220
 IPAddress   sta_GW(192, 168, 0, 1);
 IPAddress   sta_Mask(255, 255, 255, 0);
-IPAddress   ap_IP(192, 168, 0, 220);
+IPAddress   ap_IP(192, 168, 0, 220);		// WEB Server IP: 192.168.0.220
 IPAddress   ap_Mask(255, 255, 255, 0);
 String      ssid_sta      = "ssid";
 String      pass_sta      = "pass";
