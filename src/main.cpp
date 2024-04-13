@@ -13,7 +13,6 @@ Flash: [======    ]  61.1% (used 801377 bytes from 1310720 bytes)
 #include <webPage.h>
 
 #define GP04    4               // User Led (Blue)
-#define GP16    16              // LOW - Out TX Enable/Disable
 #define GP17    17              // Button (Set AP Mode)
 #define GP34    34              // ADC (add to pin GPIO34 wire 0.1 m)
 
@@ -71,7 +70,6 @@ void ledOff() {digitalWrite(GP04, LOW);}  // User Led (Blue)
 
 void IRAM_ATTR restart()  {
   Serial.println("RESTART");
-  delay(100); digitalWrite(GP16, LOW);    // HIGH - Out TX Disable
   delay(100); esp_restart();
 }
 
@@ -276,14 +274,11 @@ void setup() {
   pinMode(GP17, INPUT_PULLUP);            // Button (Set AP Mode)
   pinMode(GP04, OUTPUT);                  // User Led (Blue)
   digitalWrite(GP04, LOW);                // User Led (Blue) Off
-  pinMode(GP16, OUTPUT);
-  digitalWrite(GP16, LOW);                // HIGH - Out TX Disable
   delay(100);
 
   Serial.setDebugOutput(false);
   Serial.begin(115200);
   while (!Serial);
-  digitalWrite(GP16, HIGH);               // HIGH - Out TX Enable
   delay(10);
   if (!digitalRead(GP17)) {wifi_Init_AP_Mode();}
   else                    {wifi_Init_STA_Mode();}
